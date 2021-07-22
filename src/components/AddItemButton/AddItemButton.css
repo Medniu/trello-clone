@@ -1,0 +1,63 @@
+.cardButton{
+    display: flex;
+    flex-direction: row;
+    border-radius: 5px;
+    padding: 5px 0px;
+    opacity: 0.5;
+    cursor: pointer;
+    background-color: #ebecf0de;
+}
+
+.listButton{
+    display: flex;
+    flex-direction: row;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+    opacity: 1;
+    color: white;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, .15);
+    height: min-content;
+}
+
+.cardButton:hover{
+    background-color: #979c97a4;
+}
+
+.listButton:hover{
+    background-color: #979c97a4;
+}
+
+p{
+    margin: 0px;
+}
+
+.card-component{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.title{
+    margin: 5px;
+    padding: 5px;
+}
+
+.description{
+    margin: 5px;
+    padding: 5px;
+}
+
+.color{
+    margin: 5px;
+    padding: 5px;
+}
+
+.buttons{
+    flex-direction: row;
+    margin: 5px;
+    padding: 5px;
+    display: flex;
+    justify-content: space-evenly;
+}
