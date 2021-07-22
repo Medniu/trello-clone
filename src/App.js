@@ -1,24 +1,28 @@
-import logo from './logo.svg';
+import { useDispatch, useSelector } from "react-redux";
+import TrelloList from './components/TrelloList/TrelloList';
+import AddItemButton from './components/AddItemButton/AddItemButton';
+import Modal from './components/Modal/Modal.jsx';
+import { ADD_LIST_BUTTON } from "./constants/index";
 import './App.css';
 
-function App() {
+const App = () => {
+  const dispatch = useDispatch();
+  const trelloList = useSelector((state) => state.list);
+
+  console.log(trelloList);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="header-container">
+        <h2>Trello</h2>
+      </div>
+      <div className="column-container">
+        {
+          trelloList.map(list=> <TrelloList key = {list.id} title = {list.title} cards = {list.cards} />)
+        }
+        <AddItemButton typeOfItem = {ADD_LIST_BUTTON}/>
+      </div>
     </div>
+
   );
 }
 

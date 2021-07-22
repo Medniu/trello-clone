@@ -1,0 +1,18 @@
+h4 {
+    display: flex;
+    margin: 6px 8px;;
+    cursor: grab;
+}
+
+.list-container {
+    background-color: #ebecf0de;
+    border-radius: 5px;
+    width: 250px;
+    padding: 8px;
+    margin: 5px;
+    height: min-content;
+}
+
+.cards{
+    cursor: pointer;
+}
