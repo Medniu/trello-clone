@@ -1,15 +1,12 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { ADD_LIST_BUTTON } from "./constants/index";
 import TrelloList from './components/TrelloList/TrelloList';
 import AddItemButton from './components/AddItemButton/AddItemButton';
-import Modal from './components/Modal/Modal.jsx';
-import { ADD_LIST_BUTTON } from "./constants/index";
 import './App.css';
 
 const App = () => {
-  const dispatch = useDispatch();
-  const trelloList = useSelector((state) => state.list);
+  const trelloList = useSelector((state) => state.list.list);
 
-  console.log(trelloList);
   return (
     <div className="App">
       <div className="header-container">
@@ -17,9 +14,9 @@ const App = () => {
       </div>
       <div className="column-container">
         {
-          trelloList.map(list=> <TrelloList key = {list.id} title = {list.title} cards = {list.cards} />)
+          trelloList.map(list=> <TrelloList key = { list.id } id = { list.id }  title = { list.title } cards = { list.cards } />)
         }
-        <AddItemButton typeOfItem = {ADD_LIST_BUTTON}/>
+        <AddItemButton typeOfItem = { ADD_LIST_BUTTON }/>
       </div>
     </div>
 
