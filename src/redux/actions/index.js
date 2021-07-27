@@ -1,3 +1,4 @@
+import { Draggable } from "react-beautiful-dnd";
 import { ACTION_TYPE } from "../../constants";
 
 const addList = () => ({
@@ -24,6 +25,17 @@ const changeTextColor = (cardInfo) => ({
   payload: cardInfo,
 });
 
+const moveCard = (draggableIdStart, draggableIdEnd ,draggableIndexStart, draggableIndexEnd, draggableId) => ({
+  type: ACTION_TYPE.DRAG_CARD,
+  payload: {
+    draggableIdStart,
+    draggableIdEnd ,
+    draggableIndexStart,
+    draggableIndexEnd,
+    draggableId
+  }
+});
 
 
-export { addList, addCard, updateCardInfo, updateListTitle, changeTextColor };
+
+export { addList, addCard, updateCardInfo, updateListTitle, changeTextColor, moveCard };

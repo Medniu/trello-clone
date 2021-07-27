@@ -18,15 +18,23 @@ const AddItemButton = ({ typeOfItem, listId }) => {
     const onCreateItem = () => {
         if(typeOfItem === ADD_LIST_BUTTON){
             dispatch(addList())
-            console.log("add new list");
             return;
         }
         setOpenModal(true);
     }
 
+    const setDefaultValueAndCloseModal = () => {
+        setCardTitle("")
+        setCardDescription("");
+        setOpenModal(false)
+    }
+
     const onAddCard = () => {     
         dispatch(addCard({ listId, cardTitle, cardDescription, textColor }))
-        setOpenModal(false);
+        setDefaultValueAndCloseModal();
+    }
+    const closeModal = () => {
+        setDefaultValueAndCloseModal();
     }
     
     return (
@@ -35,7 +43,7 @@ const AddItemButton = ({ typeOfItem, listId }) => {
                 <AddIcon/>
                 <p>{"Add another " + typeOfItem}</p>
             </div>
-            <Modal open={openModal} onClose={() => setOpenModal(false)}>
+            <Modal open={openModal} onClose={() => closeModal()}>
                 <div className="card-component">
                     <div className="title">
                         <TextField style = {{ width: "100%", maxWidth: "500px" }} id="standard-basic" label="Title" onChange={(e) => setCardTitle(e.target.value)}/>
@@ -63,7 +71,7 @@ const AddItemButton = ({ typeOfItem, listId }) => {
                         <Button
                             variant="contained"
                             color="secondary"
-                            onClick={()=>setOpenModal(false)}
+                            onClick={() => closeModal()}
                         >
                             Close
                         </Button>

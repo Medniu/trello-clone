@@ -62,7 +62,9 @@ const listReducer = (state = INITIAL_STATE, action) => {
         const { listId, cardTitle, cardDescription, textColor } = action.payload;
 
         const list = state.list.find((column) => column.id === listId);
-        list.cards.push({ id: list.cards.length, title: cardTitle, text: cardDescription, color: textColor });
+        const listID = state.list.reduce((accumulator, currentValue) => accumulator + currentValue.cards.length, 0);
+
+        list.cards.push({ id: listID, title: cardTitle, text: cardDescription, color: textColor });
 
         return {...state, list: [...state.list]}
 
@@ -96,7 +98,27 @@ const listReducer = (state = INITIAL_STATE, action) => {
         updatedCard.color = action.payload.cardTextColor;
 
         return  {...state, list:[...state.list]}
+
+    case ACTION_TYPE.DRAG_CARD:
+        const { draggableIdStart, draggableIdEnd, draggableIndexStart, draggableIndexEnd, draggableId } = action.payload;
+
+        if(draggableIdStart === draggableIdEnd){
+            const list = state.list.find((list) => list.id === parseInt(draggableIdStart))
+            const card = list.cards.splice(parseInt(draggableIndexStart), 1);
+            list.cards.splice(parseInt(draggableIndexEnd), 0, ...card);
+        }
+
+        if (draggableIdStart !== draggableIdEnd) {
+
+            const listStart = state.list[draggableIdStart];
+            const card = listStart.cards.splice(parseInt(draggableIndexStart), 1);
+            const listEnd = state.list[draggableIdEnd];
     
+            listEnd.cards.splice(parseInt(draggableIndexEnd), 0, ...card);
+        }
+
+        return { ...state, list:[...state.list] };
+
     default:
         return state;
   }
