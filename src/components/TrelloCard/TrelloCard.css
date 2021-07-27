@@ -2,3 +2,11 @@
     margin: 5px;
     cursor: pointer;
 }
+
+textarea { 
+    width:100%;
+    resize:both;  
+    min-height:100px;
+    min-width: 250px; 
+    max-width: 500px;
+}
