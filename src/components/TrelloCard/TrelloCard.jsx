@@ -35,20 +35,20 @@ const TrelloCard = ({ cardId, listId, title, text, color, cardIndex }) => {
 
     return (
         <>
-            <Draggable draggableId={String(cardId)} index={cardIndex}>
+            <Draggable draggableId={ String(cardId) } index={ cardIndex }>
                 {provided => (
                     <div className="card" 
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        ref={provided.innerRef}
-                        onClick ={() => setOpenModal(true)}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            ref={provided.innerRef}
+                            onClick ={() => setOpenModal(true)}
                     >
-                    <Card>
-                        <Typography>
-                            {title}
-                        </Typography>
-                    </Card>
-                </div>
+                        <Card>
+                            <Typography>
+                                {title}
+                            </Typography>
+                        </Card>
+                    </div>
                 )}
             </Draggable>
             <Modal open={openModal} onClose={() =>  closeModal()}>
@@ -94,7 +94,7 @@ const TrelloCard = ({ cardId, listId, title, text, color, cardIndex }) => {
                         </div>
                     </div>            
                 </Modal>    
-            </>   
+        </>   
     );
 }
 

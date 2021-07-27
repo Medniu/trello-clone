@@ -12,27 +12,34 @@ const App = () => {
   const trelloList = useSelector((state) => state.list.list);
   const onDragEnd = (result) => {
   
-    const { destination, source, draggableId } = result;
+    const { destination, source, draggableId, type } = result;
     if(!destination){
       return;
     }
-    dispatch(moveCard(source.droppableId, destination.droppableId, source.index, destination.index, draggableId));
+    dispatch(moveCard(source.droppableId, destination.droppableId, source.index, destination.index, draggableId, type));
   }
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
       <div className="App">
         <div className="header-container">
           <h2>Trello</h2>
         </div>
-        <div className="column-container">
-          {
-            trelloList.map(list=> <TrelloList key = { list.id } id = { list.id }  title = { list.title } cards = { list.cards } />)
-          }
-          <AddItemButton typeOfItem = { ADD_LIST_BUTTON }/>
-        </div>
-  
-      </div>
-    </DragDropContext>
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="all-lists" direction="horizontal" type="list">
+            {provided => (
+            <div className="column-container" { ...provided.droppableProps } ref={ provided.innerRef }>
+              {
+                trelloList.map((list, index) => <TrelloList key = { list.id }
+                                                            listID = { list.id }
+                                                            title = { list.title } 
+                                                            cards = { list.cards }
+                                                            index = { index } />)
+              }
+              {provided.placeholder}
+              <AddItemButton typeOfItem = { ADD_LIST_BUTTON }/>
+            </div> )}
+          </Droppable>
+      </DragDropContext>
+    </div>
   );
 }
 

@@ -100,7 +100,14 @@ const listReducer = (state = INITIAL_STATE, action) => {
         return  {...state, list:[...state.list]}
 
     case ACTION_TYPE.DRAG_CARD:
-        const { draggableIdStart, draggableIdEnd, draggableIndexStart, draggableIndexEnd, draggableId } = action.payload;
+        const { draggableIdStart, draggableIdEnd, draggableIndexStart, draggableIndexEnd, draggableId, type } = action.payload;
+        console.log(draggableIdStart, draggableIdEnd, draggableIndexStart, draggableIndexEnd, draggableId, type)
+
+        if(type === "list"){
+            const list = state.list.splice(draggableIndexStart, 1);
+            state.list.splice(draggableIndexEnd, 0, ...list);
+            return { ...state, list:[...state.list] }
+        }
 
         if(draggableIdStart === draggableIdEnd){
             const list = state.list.find((list) => list.id === parseInt(draggableIdStart))
