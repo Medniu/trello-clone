@@ -14,7 +14,7 @@ const TrelloList = ({ listID, title, cards, index }) => {
     const [isChangeTitle, setIsChangeTitle] = useState(false);
     const dispatch = useDispatch();
 
-    const lostFocus = () => {
+    const changeTitle = () => {
         dispatch(updateListTitle({ listID, newTitle }))
         setIsChangeTitle(false);
     } 
@@ -27,20 +27,22 @@ const TrelloList = ({ listID, title, cards, index }) => {
                         {provided =>                 
                             <div className="list-container">
                                 { isChangeTitle ? 
-                                <div className="change-title-container">
-                                    <TextField style = {{ width: "100%", maxWidth: "500px" }}
-                                            defaultValue={title}
-                                            id="standard-basic"
-                                            label="Title"
-                                            onBlur={() => lostFocus()}
-                                            onChange={(e) => setNewTitle(e.target.value)}/>
-                                    <CloseIcon onClick={() => setIsChangeTitle(false)}></CloseIcon>
-                                </div> :
-                                <h4 onClick={() => setIsChangeTitle(true)}>
-                                    <span>
-                                        {title}
-                                    </span>
-                                </h4>}                
+                                    <div className="change-title-container">
+                                        <TextField style = {{ width: "100%", maxWidth: "500px" }}
+                                                defaultValue={title}
+                                                id="standard-basic"
+                                                label="Title"
+                                                onBlur={() => changeTitle()}
+                                                onChange={(e) => setNewTitle(e.target.value)}/>
+                                        <CloseIcon style={{cursor:"pointer"}} onClick={() => changeTitle()}></CloseIcon>
+                                    </div> 
+                                    :
+                                    <h4 onClick={() => setIsChangeTitle(true)}>
+                                        <span>
+                                            {title}
+                                        </span>
+                                    </h4>
+                                }                
                                 <div className="cards-container" { ...provided.droppableProps } ref = { provided.innerRef }>
                                     {cards.map((card, index) =>
                                         <TrelloCard  key = { card.id }
@@ -49,9 +51,10 @@ const TrelloList = ({ listID, title, cards, index }) => {
                                                         title = { card.title }
                                                         text = { card.text }
                                                         color = { card.color }
-                                                        cardIndex = {index} />)}
+                                                        cardIndex = {index} />
+                                    )}                                    
                                 </div>
-                                {provided.placeholder}
+                                { provided.placeholder }
                                 <AddItemButton typeOfItem = { ADD_CARD_BUTTON } listId = { listID } />                    
                             </div>
                         }

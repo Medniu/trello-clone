@@ -3,43 +3,43 @@ import { ACTION_TYPE } from "../../constants";
 const INITIAL_STATE = {
     list: [
             {
-                id: 0,
-                title:"First column",
+                id: `listId-${0}`,
+                title:"To Do",
                 cards: [
                     {
-                        id:0,
-                        title:"some Titl from Card1",
-                        text:"some Text from Card1",
+                        id: `cardId-${0}`,
+                        title:"Setup Env",
+                        text:"Install Node.js, npm",
                         color:"black"
                     },
                     {
-                        id:1,
-                        title:"some Titl from Card2",
-                        text:"some Text from Card2",
+                        id: `cardId-${1}`,
+                        title:"Create App",
+                        text:"Create react app",
                         color:"black"
                     },
                     {
-                        id:2,
-                        title:"some Titl from Card3",
-                        text:"some Text from Card3",
+                        id:`cardId-${2}`,
+                        title:"Create Rep on gitHub",
+                        text:"Create Rep for project",
                         color:"black"
                     },
                 ]        
             },
             {
-                id: 1,
-                title:"Second column",
+                id: `listId-${1}`,
+                title:"In progress",
                 cards: [
                     {
-                        id:3,
-                        title:"some Titl from Card4",
-                        text:"some Text from Card4",
+                        id:`cardId-${3}`,
+                        title:"Watch movie",
+                        text:"Choose movie to watch",
                         color:"black"
                     },
                     {
-                        id:4,
-                        title:"some Titl from Card5",
-                        text:"some Text from Card5",
+                        id:`cardId-${4}`,
+                        title:"Prepare dinner",
+                        text:"fry potatoes with chicken",
                         color:"black"
                     },
                 ]        
@@ -51,7 +51,7 @@ const listReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case ACTION_TYPE.ADD_LIST:
         const newColumn = {
-            id: state.list.length,
+            id: `listId-${state.list.length}`,
             title: "Default Title",
             cards:[]
         }
@@ -64,7 +64,7 @@ const listReducer = (state = INITIAL_STATE, action) => {
         const list = state.list.find((column) => column.id === listId);
         const listID = state.list.reduce((accumulator, currentValue) => accumulator + currentValue.cards.length, 0);
 
-        list.cards.push({ id: listID, title: cardTitle, text: cardDescription, color: textColor });
+        list.cards.push({ id: `cardId-${listID}`, title: cardTitle, text: cardDescription, color: textColor });
 
         return {...state, list: [...state.list]}
 
@@ -84,7 +84,7 @@ const listReducer = (state = INITIAL_STATE, action) => {
 
     case ACTION_TYPE.UPDATE_LIST_TITLE:
 
-        const updatedList = state.list.find((list) => list.id === action.payload.id);
+        const updatedList = state.list.find((list) => list.id === action.payload.listID);
 
         updatedList.title = action.payload.newTitle;
 
@@ -101,27 +101,26 @@ const listReducer = (state = INITIAL_STATE, action) => {
 
     case ACTION_TYPE.DRAG_CARD:
         const { draggableIdStart, draggableIdEnd, draggableIndexStart, draggableIndexEnd, draggableId, type } = action.payload;
-        console.log(draggableIdStart, draggableIdEnd, draggableIndexStart, draggableIndexEnd, draggableId, type)
 
         if(type === "list"){
             const list = state.list.splice(draggableIndexStart, 1);
             state.list.splice(draggableIndexEnd, 0, ...list);
+
             return { ...state, list:[...state.list] }
         }
 
         if(draggableIdStart === draggableIdEnd){
-            const list = state.list.find((list) => list.id === parseInt(draggableIdStart))
-            const card = list.cards.splice(parseInt(draggableIndexStart), 1);
-            list.cards.splice(parseInt(draggableIndexEnd), 0, ...card);
+            const list = state.list.find((list) => list.id === draggableIdStart)
+            const card = list.cards.splice(draggableIndexStart, 1);
+            list.cards.splice(draggableIndexEnd, 0, ...card);
         }
 
         if (draggableIdStart !== draggableIdEnd) {
-
-            const listStart = state.list[draggableIdStart];
-            const card = listStart.cards.splice(parseInt(draggableIndexStart), 1);
-            const listEnd = state.list[draggableIdEnd];
+            const listStart = state.list.find((list) => list.id === draggableIdStart)
+            const card = listStart.cards.splice(draggableIndexStart, 1);
+            const listEnd = state.list.find((list) => list.id === draggableIdEnd)
     
-            listEnd.cards.splice(parseInt(draggableIndexEnd), 0, ...card);
+            listEnd.cards.splice(draggableIndexEnd, 0, ...card);
         }
 
         return { ...state, list:[...state.list] };
