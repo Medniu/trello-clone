@@ -17,5 +17,12 @@ const ACTION_TYPE = {
     DRAG_CARD: "DRAG_CARD"
 }
 
+const BACKGROUND_IMAGE = {
+    DEFAULT: `https://static.tildacdn.com/tild3362-6431-4133-a566-386133333965/trello.svg`,
+    RAIN: `https://wallpaperaccess.com/full/164284.jpg`,
+    CLOUDS: `https://i.pinimg.com/originals/db/c6/0a/dbc60a7225a2853e2aa94be72febeb88.jpg`,
+    LANDSCAPE: `https://cutewallpaper.org/21/trello-backgrounds/Windows-Backgrounds-Mountain-Stock-Photos-Backgroundnature-.jpg`,
+}
 
-export { ADD_CARD_BUTTON, ADD_LIST_BUTTON, BLACK, GREEN, RED, YELLOW, ACTION_TYPE, colorArray };
+
+export { ADD_CARD_BUTTON, ADD_LIST_BUTTON, BLACK, GREEN, RED, YELLOW, ACTION_TYPE, colorArray, BACKGROUND_IMAGE };
